@@ -1,0 +1,39 @@
+http:=hyper text transfer protocal
+url=uniform resourse locator
+
+Request Header =  from client
+Response Header = from server
+Representation Header = encoding/compression
+Payload Headers = data
+
+HTTP Methods
+GET = retrieve a resource
+HEAD = No message body(Response Headers only)
+OPTIONS = what operations are available
+TRACE = loopback test(get same data)
+DELETE = remove a resource
+PUT = replace a resource
+POST = interact with resource (mostly add)
+PATCH = change part of a resource
+
+HTTP Status Codes
+1xx = Informational
+2xx = Success
+3xx = Redirection
+4xx = Client Error
+5xx = Server Error
+
+100 = Continue
+102 = Processing
+200 = OK
+201 = Created
+202 = Accepted
+204 = No Content
+307 = Temporary Redirect
+308 = Permanent Redirect
+400 = Bad Request
+401 = Unauthorized
+402 = Payment Required
+404 = Not Found
+500 = Internal Server Error
+504 = Gateway Timeout
