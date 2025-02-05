@@ -26,4 +26,4 @@ cloudinary.config({
     api_secret: process.env.CLOUDNARY_API_SECRET 
 });
 
-export default uploadToCloudinary;
+export {uploadToCloudinary};

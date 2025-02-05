@@ -24,6 +24,10 @@ const registerUser = asyncHandler(async (req, res) => {
     // if(fullname === undefined || fullname === ""){
     //     throw new ApiError(400,"Fullname is reqiured")
     // }
+    if(password.length < 6){
+        throw new ApiError(400,"Password must be atleast 6 characters long")
+    }
+
     if (
         [fullname, email, password, username].some((field) => {
             return field?.trim() === ""
@@ -32,8 +36,8 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(400,"All fields are required");
     }
 
-    const existedUserEmail = User.findOne({email});
-    const existedUsername = User.findOne({username})
+    const existedUserEmail = await User.findOne({email});
+    const existedUsername = await User.findOne({username})
     if(existedUserEmail){
         throw new ApiError(409,"Email already exists")
     }
@@ -49,8 +53,8 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(400,"Avatar is required")
     }
 
-    const avatar = uploadToCloudinary(avatarLocalPath);
-    const coverImage = uploadToCloudinary(coverImageLocalPath);
+    const avatar = await uploadToCloudinary(avatarLocalPath);
+    const coverImage = await uploadToCloudinary(coverImageLocalPath);
 
     if(!avatar){
         throw new ApiError(400,"avatar not uploaded");

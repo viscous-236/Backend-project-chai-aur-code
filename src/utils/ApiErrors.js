@@ -20,7 +20,7 @@ class ApiError extends Error {
     }
 }
 
-export default ApiError
+export {ApiError}
 
 // Stack trace is a list of the function calls that the application was in the middle of when an error occurred.
 // Error.captureStackTrace() :- This method is used to create a stack trace for the error. It captures the current call stack and assigns it to the stack property of the error object. This is useful for custom error classes to ensure they have a stack trace similar to built-in errors.
