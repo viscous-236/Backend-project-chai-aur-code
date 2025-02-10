@@ -30,6 +30,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (
         [fullname, email, password, username].some((field) => {
+            console.log("field: ",field);
             return field?.trim() === ""
         })
     ){
@@ -46,15 +47,26 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     // as we have declared the middleware in the route, we can access the req.files, its better to chain it optionally, we need its firest property as it gives an object with path property
-    const avatarLocalPath = req.files?.avatar[0]?.path; 
-    const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
+    const avatarLocalPath = req.files?.avatar[0]?.path; 
+    //const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    
+    let coverImageLocalPath ;
+    if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0){
+        coverImageLocalPath = req.files.coverImage[0].path;
+    }
+    console.log("req.files",req.files);
+    
     if(!avatarLocalPath){
         throw new ApiError(400,"Avatar is required")
     }
 
     const avatar = await uploadToCloudinary(avatarLocalPath);
-    const coverImage = await uploadToCloudinary(coverImageLocalPath);
+    let coverImage;
+    if(coverImageLocalPath){
+        coverImage = await uploadToCloudinary(coverImageLocalPath);
+    }
+
 
     if(!avatar){
         throw new ApiError(400,"avatar not uploaded");
@@ -72,6 +84,8 @@ const registerUser = asyncHandler(async (req, res) => {
     const createdUser = await User.findById(user._id).select(
         "-password -refreshToken"
     )
+    console.log("createdUser",createdUser);
+    
 
     if(!createdUser){
         throw new ApiError(500,"Something went wrong while registering the user")
